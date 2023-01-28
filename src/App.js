@@ -1,25 +1,71 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
+import { Boton } from './components/Boton';
+import { BotonClear } from './components/BotonClear';
+import { ScreenCalculadora } from './components/ScreenCalculadora';
+import { evaluate } from 'mathjs';
 
-function App() {
+export const App = () => {
+
+const [input, setInput] = useState('');
+
+const agregarInput = val => {
+
+  setInput( input + val );
+};
+
+const calcularResultado = () => {
+
+  if ( input ) {
+
+    setInput( evaluate( input ));
+  } else {
+    alert('Por favor ingrese valores para realizar la operación');
+  }
+ 
+};
+
   return (
+
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+         
+        <div className='container-calculadora'>
+
+              <ScreenCalculadora input={ input } />
+
+              <div className='fila'>
+                <Boton manejarClick={ agregarInput }>1</Boton>
+                <Boton manejarClick={ agregarInput }>2</Boton>
+                <Boton manejarClick={ agregarInput }>3</Boton>
+                <Boton manejarClick={ agregarInput }>+</Boton>
+              </div>
+              <div className='fila'>
+                <Boton manejarClick={ agregarInput }>4</Boton>
+                <Boton manejarClick={ agregarInput }>5</Boton>
+                <Boton manejarClick={ agregarInput }>6</Boton>
+                <Boton manejarClick={ agregarInput }>-</Boton>
+              </div>
+              <div className='fila'>
+                <Boton manejarClick={ agregarInput }>7</Boton>
+                <Boton manejarClick={ agregarInput }>8</Boton>
+                <Boton manejarClick={ agregarInput }>9</Boton>
+                <Boton manejarClick={ agregarInput }>*</Boton>
+              </div>
+              <div className='fila'>
+                <Boton manejarClick={ calcularResultado }>=</Boton>
+                <Boton manejarClick={ agregarInput }>0</Boton>
+                <Boton manejarClick={ agregarInput }>.</Boton>
+                <Boton manejarClick={ agregarInput }>/</Boton>
+              </div>
+              <div className='fila'>
+                <BotonClear
+                manejarClear={ () => setInput('')}
+                >Clear</BotonClear>
+              </div>
+          
+        </div>
+      
+   
     </div>
   );
 }
-
-export default App;
